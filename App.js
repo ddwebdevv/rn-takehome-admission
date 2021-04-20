@@ -1,21 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+
+//styling. theme
+import { ThemeProvider } from "styled-components/native";
+import Navigation from "./src/infrastructure/navigation";
+import { theme } from "./src/infrastructure/theme";
+
+//fonts
+import {
+  useFonts as useCreteRound,
+  CreteRound_400Regular
+} from "@expo-google-fonts/crete-round";
+import {
+  useFonts as useNorican,
+  Norican_400Regular
+} from "@expo-google-fonts/norican";
+import {
+  useFonts as useAlmarai,
+  Almarai_300Light,
+  Almarai_400Regular,
+  Almarai_700Bold,
+  Almarai_800ExtraBold
+} from "@expo-google-fonts/almarai";
 
 export default function App() {
+  const [almaraiLoaded] = useAlmarai({
+    Almarai_400Regular,
+    Almarai_700Bold
+  });
+
+  const [noricanLoaded] = useNorican({
+    Norican_400Regular
+  });
+
+  if (!almaraiLoaded || !noricanLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <ThemeProvider theme={theme}>
+      <Navigation />
       <StatusBar style="auto" />
-    </View>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
